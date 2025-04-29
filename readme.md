@@ -126,3 +126,20 @@ Now you have the run files in the `run_files` directory.
 ## Abstract
 
 The peer review process is crucial for ensuring the quality and reliability of scholarly work, yet assigning suitable reviewers remains a significant challenge. Traditional manual methods are labor-intensive and often ineffective, leading to unconstructive or biased reviews. This paper introduces the exHarmony benchmark, designed to address these challenges by reimagining the Reviewer Assignment Problem (RAP) as a retrieval task. Utilizing the extensive data from OpenAlex, we propose a novel approach that considers an author as the best potential reviewer for their own paper. This allows us to evaluate and improve reviewer assignment without needing explicit labels. We benchmark various methods, including traditional lexical matching, static neural embeddings, and contextualized neural embeddings, and introduce evaluation metrics that assess both relevance and diversity. Our results indicate that while traditional methods perform reasonably well, contextualized embeddings trained on scholarly literature show the best performance. The findings underscore the importance of further research to enhance the diversity and effectiveness of reviewer assignments.
+
+## Citation
+
+If you use this resource, please cite our paper:
+
+```
+@inproceedings{ebrahimi2025exharmony,
+author = {Ebrahimi, Sajad and Salamat, Sara and Arabzadeh, Negar and Bashari, Mahdi and Bagheri, Ebrahim},
+title = {exHarmony: Authorship and&nbsp;Citations for&nbsp;Benchmarking the&nbsp;Reviewer Assignment Problem},
+year = {2025},
+isbn = {978-3-031-88713-0},
+publisher = {Springer-Verlag},
+doi = {10.1007/978-3-031-88714-7_1},
+booktitle = {Advances in Information Retrieval: 47th European Conference on Information Retrieval, ECIR 2025, Lucca, Italy, April 6–10, 2025, Proceedings, Part III},
+pages = {1–16},
+}
+```
