@@ -133,13 +133,13 @@ If you use this resource, please cite our paper:
 
 ```
 @inproceedings{ebrahimi2025exharmony,
-author = {Ebrahimi, Sajad and Salamat, Sara and Arabzadeh, Negar and Bashari, Mahdi and Bagheri, Ebrahim},
-title = {exHarmony: Authorship and&nbsp;Citations for&nbsp;Benchmarking the&nbsp;Reviewer Assignment Problem},
-year = {2025},
-isbn = {978-3-031-88713-0},
-publisher = {Springer-Verlag},
-doi = {10.1007/978-3-031-88714-7_1},
-booktitle = {Advances in Information Retrieval: 47th European Conference on Information Retrieval, ECIR 2025, Lucca, Italy, April 6–10, 2025, Proceedings, Part III},
-pages = {1–16},
+  author = {Ebrahimi, Sajad and Salamat, Sara and Arabzadeh, Negar and Bashari, Mahdi and Bagheri, Ebrahim},
+  title = {exHarmony: Authorship and Citations for Benchmarking the Reviewer Assignment Problem},
+  year = {2025},
+  isbn = {978-3-031-88713-0},
+  publisher = {Springer-Verlag},
+  doi = {10.1007/978-3-031-88714-7_1},
+  booktitle = {Advances in Information Retrieval: 47th European Conference on Information Retrieval, ECIR 2025, Lucca, Italy, April 6–10, 2025, Proceedings, Part III},
+  pages = {1–16},
 }
 ```
