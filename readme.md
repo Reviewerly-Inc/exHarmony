@@ -2,18 +2,29 @@
 
 This repository contains the code and data for the paper "Authorship and Citations for Benchmarking the Reviewer Assignment Problem" and the "exHarmony" dataset.
 It should be noted that due to the size of the dataset, we are unable to provide the full dataset in this repository.
-Hence, the repository contains the codes for the sake of reproducibility and the data are available on Google Drive.
+Hence, the repository contains the codes for the sake of reproducibility and the data are available on:
 
-By following the instructions below, you can download the dataset and run files to either reproduce the results or use
-the dataset for your research.
+* **Hugging Face Datasets**: [https://huggingface.co/datasets/Reviewerly/exHarmony](https://huggingface.co/datasets/Reviewerly/exHarmony)
+* **Google Drive**: Follow the provided instructions in [Download from Google Drive](#option-2-download-from-google-drive) section.
+
 
 ## Dataset
 
-This figure represents the number of papers and their authors before and after the filtering step in the test set. More specifically, the blue bars represent the histogram of papers with $N$ number of authors in the test set. Since the authors in the collection are those who have had any publications before time $\tau$, some authors might not exist in the collection. As such, they cannot be used as the gold standard for evaluation. Therefore, we remove any papers for which none of their authors exist in the collection. The red bars represent the number of authors per paper after filtering out papers with no authors. After filtering, there remain 7,944 papers in our test set.
+### Option 1: Download from Hugging Face
 
-![Number of Papers and Authors Before and After Filtering](filtered_authors.png)
+You can directly load the dataset using the 🤗 `datasets` library:
 
-### Download the dataset
+```bash
+pip install datasets
+```
+
+```python
+from datasets import load_dataset
+
+dataset = load_dataset("Reviewerly/exHarmony")
+```
+
+### Option 2: Download from Google Drive
 
 To download the dataset from Google Drive, you can use the following commands:
 
@@ -30,46 +41,41 @@ cd exHarmony/
 gdown --folder https://drive.google.com/drive/folders/1ZukiOXKn-Hdxdhd4oOMy57RVdyz-XTar?usp=sharing
 ```
 
-Now you have the dataset files in the `data` directory.
+Now you can find the dataset files in the `data` directory.
 
 ### Dataset Files
 
-| Description            | File Name                        | File Size | Num Records | Format                                                                 |
-|------------------------|----------------------------------|-----------|-------------|------------------------------------------------------------------------|
-| Collection             | papers_collection.tsv            | 1.5 GB    | 1,204,150   | TSV: paper_id, title, abstract                                         |
-| Test                   | papers_test.tsv                  | 14 MB     | 7,944       | TSV: paper_id, title, abstract                                         |
-| Authors' Works Mapping | authors_works_collection_ids.tsv | 193 MB    | 1,589,723   | TSV: author_id, list_of_authors_papers                                 |
-| Authors' Information   | authors_info.pkl                 | 126 MB    | 1,589,723   | Pickle: A dictionary with ids as keys and author information as values |
+| Description            | File Name                          | File Size | Num Records | Format                                                            |
+|------------------------|------------------------------------|-----------|-------------|-------------------------------------------------------------------|
+| Collection             | papers_collection.jsonl            | 1.6 GB    | 1,204,150   | paper_id, title, abstract                                         |
+| Test                   | papers_test.jsonl                  | 15 MB     | 9,771       | paper_id, title, abstract                                         |
+| Test (judgable)        | papers_test_judgable.jsonl         | 14 MB     | 7,944       | paper_id, title, abstract                                         |
+| Authors' Works Mapping | authors_works_collection_ids.jsonl | 222 MB    | 1,589,723   | author_id, list_of_authors_papers                                 |
+| Authors' Information   | authors_info.jsonl                 | 225 MB    | 1,589,723   | author_id, citation, works_count, experience_years, institution   |
 
-All `tsv` formatted files are also available in the `pkl` format for faster loading and getting rid of the text parsing
-overhead. Each `pkl` file contains a list of dictionaries, where each dictionary corresponds to a row in the `tsv` file.
+Each file is stored in JSON Lines format (`.jsonl`), where each line is a JSON object corresponding to a record.
 
 ### File Descriptions
 
 It is now possible to access the exHarmony dataset in the `data` folder. Here are the files it contains:
 
-- `papers_collection.tsv`: Contains information about the papers that have been used to build the index for the author
-  retrieval task.
-    - Here is a sample row from the file:
-      ```
-      https://openalex.org/W4323317762        Sharding-Based Proof-of-Stake Blockchain Protocols: Key Components & Probabilistic Security Analysis        Blockchain technology has been gaining great interest from a variety of sectors including healthcare, supply chain, and cryptocurrencies. However, Blockchain suffers from a limited ability to scale (i.e., low throughput and high latency). Several solutions have been proposed to tackle this. In particular, sharding has proved to be one of the most promising solutions to Blockchain's scalability issue. Sharding can be divided into two major categories: (1) Sharding-based Proof-of-Work (PoW) Blockchain protocols, and (2) Sharding-based Proof-of-Stake (PoS) Blockchain protocols. The two categories achieve good performances (i.e., good throughput with a reasonable latency), but raise security issues. This article focuses on the second category. In this paper, we start by introducing the key components of sharding-based PoS Blockchain protocols. We then briefly introduce two consensus mechanisms, namely PoS and practical Byzantine Fault Tolerance (pBFT), and discuss their use and limitations in the context of sharding-based Blockchain protocols. Next, we provide a probabilistic model to analyze the security of these protocols. More specifically, we compute the probability of committing a faulty block and measure the security by computing the number of years to fail. We achieve a number of years to fail of approximately 4000 in a network of 4000 nodes, 10 shards, and a shard resiliency of 33%
-      ```
-
+- `papers_collection.jsonl`: Contains information about the papers that have been used to build the index for the author retrieval task.
 - `papers_test.tsv`: Contains the test set for the author retrieval task.
-    - Here is a sample row from the file:
-      ```
-      https://openalex.org/W4382568152        Routing, Channel, Key-Rate, and Time-Slot Assignment for QKD in Optical Networks        Quantum Key Distribution (QKD) is currently being explored as a solution to the threats posed to current cryptographic protocols by the evolution of quantum computers and algorithms.However, single-photon quantum signals used for QKD permit to achieve key rates strongly limited by link performance (e.g., loss and noise) and propagation distance, especially in multinode QKD networks, making it necessary to design a scheme to efficiently and timely distribute keys to the various nodes.In this work, we introduce the new problem of joint Routing, Channel, Key-rate and Time-slot Assignment (RCKTA), which is addressed with four different network settings, i.e., allowing or not the use of optical bypass (OB) and trusted relay (TR).We first prove the NP-hardness of the RCKTA problem for all network settings and formulate it using a Mixed Integer Linear Programming (MILP) model that combines both quantum channels and quantum key pool (QKP) to provide an optimized solution in terms of number of accepted key rate requests and key storing rate.To deal with problem complexity, we also propose a heuristic algorithm based on an auxiliary graph, and show that it is able to obtain nearoptimal solutions in polynomial time.Results show that allowing OB and TR achieves an acceptance ratio of 39% and 14% higher than that of OB and TR, respectively.Remarkably, these acceptance ratios are obtained with up to 46% less QKD modules (transceivers) compared to TR and only few (less than 1 per path) additional QKD modules than OB.
+- `papers_test_judgable.tsv`: Since the authors in the collection are those who have had any publications before time $\tau$, some authors might not exist in the collection. As such, they cannot be used as the gold standard for evaluation. Therefore, we remove any papers for which none of their authors exist in the test set and created this set.
+    - Here is a sample row from the `papers_test.tsv` file which illustrates the structure in these three files:
+      ```json
+      {"id": "https://openalex.org/W4323317762", "title": "Sharding-Based Proof-of-Stake Blockchain Protocols: Key Components &amp; Probabilistic Security Analysis", "abstract": "Blockchain technology has been gaining great interest from a variety of sectors including healthcare, supply chain, and cryptocurrencies. However, Blockchain suffers from a limited ability to scale (i.e., low throughput and high latency). Several solutions have been proposed to tackle this. In particular, sharding has proved to be one of the most promising solutions to Blockchain's scalability issue. Sharding can be divided into two major categories: (1) Sharding-based Proof-of-Work (PoW) Blockchain protocols, and (2) Sharding-based Proof-of-Stake (PoS) Blockchain protocols. The two categories achieve good performances (i.e., good throughput with a reasonable latency), but raise security issues. This article focuses on the second category. In this paper, we start by introducing the key components of sharding-based PoS Blockchain protocols. We then briefly introduce two consensus mechanisms, namely PoS and practical Byzantine Fault Tolerance (pBFT), and discuss their use and limitations in the context of sharding-based Blockchain protocols. Next, we provide a probabilistic model to analyze the security of these protocols. More specifically, we compute the probability of committing a faulty block and measure the security by computing the number of years to fail. We achieve a number of years to fail of approximately 4000 in a network of 4000 nodes, 10 shards, and a shard resiliency of 33%."}
       ```
 
-- `authors_works_collection_ids.tsv`: Contains the mapping between authors and their works in the index.
+- `authors_works_collection_ids.jsonl`: Contains the mapping between authors and their works in the index.
     - Here is a sample row from the file:
+      ```json
+      {"id": "https://openalex.org/A5083262615", "works": ["https://openalex.org/W4323317762", "https://openalex.org/W4285189682", "https://openalex.org/W2994826096", "https://openalex.org/W3090464427", "https://openalex.org/W3039746697", "https://openalex.org/W2955700129", "https://openalex.org/W4313679422", "https://openalex.org/W4310681652", "https://openalex.org/W4311152538"]}
       ```
-      https://openalex.org/A5083262615        ['https://openalex.org/W4323317762', 'https://openalex.org/W4285189682', 'https://openalex.org/W2994826096', 'https://openalex.org/W3090464427', 'https://openalex.org/W3039746697', 'https://openalex.org/W2955700129', 'https://openalex.org/W4313679422', 'https://openalex.org/W4310681652', 'https://openalex.org/W4311152538']
-      ```
-- `authors_info.tsv`: Contains the information about the authors in the index.
+- `authors_info.jsonl`: Contains the information about the authors in the index.
     - Here is a sample item from the dictionary:
-      ```
-      https://openalex.org/A5083262615: {'citations': 238, 'works_count': 14, 'experience_years': 5, 'institution': 'Université de Montréal'}
+      ```json
+      {"id": "https://openalex.org/A5083262615", "citations": 238, "works_count": 14, "experience_years": 5, "institution": "Université de Montréal"}
       ```
 
 ## Qrel Files
@@ -87,13 +93,11 @@ further filtered to retain only “experts” — defined as authors with more t
 ten qrel sets. This multi-faceted approach allowed us to evaluate model performance across various interpretations of
 relevance.
 
-| Qrel Set                           | Description                                                                | Number of Pairs | Filename                  |
-|------------------------------------|----------------------------------------------------------------------------|-----------------|---------------------------|
-| Paper Authors                      | Authors of each paper are considered relevant.                             | 33,120          | `qrels_paper_authors.txt` |
-| Most Similar Paper Authors         | Authors of the most similar paper in the test set are considered relevant. | 37,419          | `qrels_similar_paper.txt` |
-| Cited Works Authors                | Authors of works cited by each paper are considered relevant.              | 695,271         | `qrels_cited_works.txt`   |
-| Top 10 Cited Similar Works Authors | Authors of the top 10 similar cited works are considered relevant.         | 202,904         | `qrels_top10_cited.txt`   |
-| Aggregated Authors                 | Combination of authors from the paper and the most similar paper.          | 70,539          | `qrels_aggregated.txt`    |
+| Qrel Set       | Description                                                                | Number of Pairs | Filename                  |
+|----------------|----------------------------------------------------------------------------|-----------------|---------------------------|
+| Authors        | Authors of each paper are considered relevant.                             | 33,120          | `qrels_paper_authors.txt` |
+| Cite           | Authors of the most similar paper in the test set are considered relevant. | 695,271         | `qrels_similar_paper.txt` |
+| SimCite        | Narrows citation-based relevance to the top-10 most similar cited papers.  | 202904          | `qrels_cited_works.txt`   |
 
 Each of these sets is further filtered to include only “expert” authors, resulting in ten final qrel sets for a more
 targeted evaluation of the retrieval models.
@@ -106,11 +110,11 @@ The models that have been used in the paper are as follows:
 - `BM25`
 - `Doc2Vec`
 - `Word Movers' Distance`
-- `BERT`: A BERT model that has been trained on the MS MARCO dataset.
-- `MiniLM`: A MiniLM model that has been trained on the MS MARCO dataset.
+- `BERT`: A BERT model that has been fine-tuned on the MS MARCO dataset.
+- `MiniLM`: A MiniLM model that has been fine-tuned on the MS MARCO dataset.
 - `SciBERT`
 - `SPECTER`
-- `SciBERT`: A SciBERT model that has been trained on the scholarly literature.
+- `SciBERT`: A SciBERT model that has been fine-tuned on scholarly literature.
 
 ### Download the run files
 
