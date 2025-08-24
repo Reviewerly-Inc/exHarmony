@@ -95,9 +95,9 @@ relevance.
 
 | Qrel Set       | Description                                                                | Number of Pairs | Filename                  |
 |----------------|----------------------------------------------------------------------------|-----------------|---------------------------|
-| Authors        | Authors of each paper are considered relevant.                             | 33,120          | `qrels_paper_authors.txt` |
-| Cite           | Authors of the most similar paper in the test set are considered relevant. | 695,271         | `qrels_similar_paper.txt` |
-| SimCite        | Narrows citation-based relevance to the top-10 most similar cited papers.  | 202904          | `qrels_cited_works.txt`   |
+| Authors        | Authors of each paper are considered relevant.                             | 33,120          | `qrels.test.authors.tsv` |
+| Cite           | Authors of the most similar paper in the test set are considered relevant. | 695,271         | `qrels.test.cite.tsv`    |
+| SimCite        | Narrows citation-based relevance to the top-10 most similar cited papers.  | 202,904         | `qrels.test.simcite.tsv` |
 
 Each of these sets is further filtered to include only “expert” authors, resulting in ten final qrel sets for a more
 targeted evaluation of the retrieval models.
